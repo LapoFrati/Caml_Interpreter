@@ -1,0 +1,23 @@
+Il codice Prog_Ocaml_Static.ml fa uso di una chiusura per ottenere un regime di scoping Statico, infatti l'ambiente presente al
+momento della dichiarazione di una funzione viene salvato in una chiusura, l'invocazione di Apply lo recupererà e lo userà
+come ambiente da usare nelle successive chiamate di sem
+
+Il codice Prog_Ocaml_Dynamic.ml invece non usa chiusure, bensì usa dentro Apply l'ambiente più recente disponibile e quindi incorre in un regime di scoping Dinamico.
+
+Per eseguire la batteria di test è sufficiente usare il comando
+$ ocaml Test_Statico.ml
+$ ocaml Test_Dinamico.ml
+
+Apply del caso Dinamico:
+
+Apply(e1, e2) -> ( match(sem(e1,r))with
+                  | Fun(f1) -> let newenv = bind(r, "par", sem(e2,r))
+                                      in sem(f1 "par", newenv)
+
+Apply del caso Statico:
+
+Apply(e1, e2) -> ( match (sem(e1,r)) with
+                          | Fun(f1, env) -> let newenv = bind(env, "par", sem(e2,r)) 
+                                              in sem(f1 "par", newenv) 
+
+Nota: nel'implementazione dell'IfThenElse è presente una sorta di ottimizzazione, se entrambi i rami resistuiscono lo stesso risultato, la guardia non viene valutata e viene direttamente restituito il risultato.
