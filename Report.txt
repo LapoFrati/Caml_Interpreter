@@ -18,6 +18,4 @@ Apply del caso Statico:
 
 Apply(e1, e2) -> ( match (sem(e1,r)) with
                           | Fun(f1, env) -> let newenv = bind(env, "par", sem(e2,r)) 
-                                              in sem(f1 "par", newenv) 
-
-Nota: nel'implementazione dell'IfThenElse è presente una sorta di ottimizzazione, se entrambi i rami resistuiscono lo stesso risultato, la guardia non viene valutata e viene direttamente restituito il risultato.
+                                              in sem(f1 "par", newenv)
